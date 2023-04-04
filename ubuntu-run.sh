@@ -41,6 +41,6 @@ acme.sh --register-account -m admin@3acloud.com
 acme.sh  --issue -d ${domain}  --standalone -k ec-256
 cp /root/.acme.sh/${domain}_ecc/fullchain.cer /root/trojan/server.cert
 cp /root/.acme.sh/${domain}_ecc/$domain.key /root/trojan/server.key
-acme.sh --installcert -d azhk.onebin.me --ecc  --key-file   /root/trojan/server.key   --fullchain-file /root/trojan/server.cert
+acme.sh --installcert -d ${domain} --ecc  --key-file   /root/trojan/server.key   --fullchain-file /root/trojan/server.cert
 systemctl start nginx
 nohup /root/trojan/trojan-go > trojan.log 2>&1 &
