@@ -10,6 +10,7 @@ echo ###########################################################################
 echo -e "\033[47;31m Enter your domain \033[0m"
 read -p "Enter your domain:" domain
 echo ############################################################################
+apt update -y
 apt -y install wget unzip nginx socat
 systemctl stop nginx
 wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
