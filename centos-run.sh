@@ -10,7 +10,7 @@ echo ###########################################################################
 echo -e "\033[47;31m Enter your domain \033[0m"
 read -p "Enter your domain:" domain
 echo ############################################################################
-yum -y install wget unzip nginx socat
+yum -y install wget unzip httpd socat
 
 wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
 unzip trojan-go-linux-amd64.zip -d trojan
@@ -41,5 +41,5 @@ acme.sh  --issue -d ${domain}  --standalone -k ec-256
 cp /root/.acme.sh/${domain}_ecc/fullchain.cer /root/trojan/server.cert
 cp /root/.acme.sh/${domain}_ecc/$domain.key /root/trojan/server.key
 acme.sh --installcert -d azhk.onebin.me --ecc  --key-file   /root/trojan/server.key   --fullchain-file /root/trojan/server.cert
-systemctl start nginx
+systemctl start httpd
 nohup /root/trojan/trojan-go > trojan.log 2>&1 &
