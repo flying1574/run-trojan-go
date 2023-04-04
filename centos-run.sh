@@ -10,6 +10,7 @@ echo ###########################################################################
 echo -e "\033[47;31m Enter your domain \033[0m"
 read -p "Enter your domain:" domain
 echo ############################################################################
+yum -y remove nginx-release-centos-7-0.el7.ngx.noarch
 rpm -Uvh  http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
 echo ####################### Install nginx ############################
 sleep 1
