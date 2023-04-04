@@ -10,6 +10,11 @@ echo ###########################################################################
 echo -e "\033[47;31m Enter your domain \033[0m"
 read -p "Enter your domain:" domain
 echo ############################################################################
+echo -e "\033[47;31m Enable TCP BBR \033[0m"
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+sysctl -p
+echo ############################################################################
 apt update -y
 apt -y install wget unzip nginx socat
 systemctl stop nginx
