@@ -14,7 +14,7 @@ rpm -Uvh  http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-
 echo ####################### Install nginx ############################
 sleep 1
 yum -y install wget unzip nginx socat
-
+systemctl stop nginx
 wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
 unzip trojan-go-linux-amd64.zip -d trojan
 cd trojan
@@ -45,5 +45,6 @@ acme.sh  --issue -d ${domain}  --standalone -k ec-256
 cp /root/.acme.sh/${domain}_ecc/fullchain.cer /root/trojan/server.cert
 cp /root/.acme.sh/${domain}_ecc/$domain.key /root/trojan/server.key
 acme.sh --installcert -d azhk.onebin.me --ecc  --key-file   /root/trojan/server.key   --fullchain-file /root/trojan/server.cert
+systemctl stop nginx
 systemctl start nginx
 nohup /root/trojan/trojan-go > trojan.log 2>&1 &
