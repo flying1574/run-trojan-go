@@ -10,7 +10,25 @@ echo ###########################################################################
 echo -e "\033[47;31m Enter your domain \033[0m"
 read -p "Enter your domain:" domain
 echo ############################################################################
-yum -y install wget unzip httpd socat
+cat > /etc/yum.repos.d/nginx.repo <<EOF
+[nginx-stable]
+name=nginx stable repo
+baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
+gpgcheck=1
+enabled=1
+gpgkey=https://nginx.org/keys/nginx_signing.key
+module_hotfixes=true
+[nginx-mainline]
+name=nginx mainline repo
+baseurl=http://nginx.org/packages/mainline/centos/$releasever/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=https://nginx.org/keys/nginx_signing.key
+module_hotfixes=true
+EOF
+echo ####################### Install nginx ############################
+sleep 1
+yum -y install wget unzip nginx socat
 
 wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
 unzip trojan-go-linux-amd64.zip -d trojan
@@ -41,5 +59,5 @@ acme.sh  --issue -d ${domain}  --standalone -k ec-256
 cp /root/.acme.sh/${domain}_ecc/fullchain.cer /root/trojan/server.cert
 cp /root/.acme.sh/${domain}_ecc/$domain.key /root/trojan/server.key
 acme.sh --installcert -d azhk.onebin.me --ecc  --key-file   /root/trojan/server.key   --fullchain-file /root/trojan/server.cert
-systemctl start httpd
+systemctl start nginx
 nohup /root/trojan/trojan-go > trojan.log 2>&1 &
