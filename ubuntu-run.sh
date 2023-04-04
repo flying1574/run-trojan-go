@@ -11,7 +11,7 @@ echo -e "\033[47;31m Enter your domain \033[0m"
 read -p "Enter your domain:" domain
 echo ############################################################################
 apt -y install wget unzip nginx socat
-
+systemctl stop nginx
 wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
 unzip trojan-go-linux-amd64.zip -d trojan
 cd trojan
@@ -35,6 +35,7 @@ EOF
 
 
 curl https://get.acme.sh | sh
+rm -rf /usr/local/bin/acme.sh
 ln -s  /root/.acme.sh/acme.sh /usr/local/bin/acme.sh
 acme.sh --register-account -m admin@3acloud.com
 acme.sh  --issue -d ${domain}  --standalone -k ec-256
