@@ -10,6 +10,11 @@ echo ###########################################################################
 echo -e "\033[47;31m Enter your domain \033[0m"
 read -p "Enter your domain:" domain
 echo ############################################################################
+echo -e "\033[47;31m Enable TCP BBR \033[0m"
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+sysctl -p
+echo ############################################################################
 yum -y remove nginx-release-centos-7-0.el7.ngx.noarch
 rpm -Uvh  http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
 echo ####################### Install nginx ############################
